@@ -10,13 +10,6 @@ public class Money {
 		this.amount = amount;
 	}
 
-	
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(amount);
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

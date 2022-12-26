@@ -12,7 +12,7 @@ public class MainApp02 {
 			stack.push(".");
 
 			while (stack.isEmpty() == false) {
-				String s = (String)stack.pop();
+				Object s = stack.pop();
 				System.out.println(s);
 			}
 

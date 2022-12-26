@@ -37,21 +37,18 @@ public class User {
 	public boolean equals(Object obj) throws PasswordDismatchException {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if (obj == null || getClass() != obj.getClass() )
 			return false;
 		
 		User other = (User) obj;
-		if (id == null) {
+		if (id == null || !id.equals(other.id)) {
 			return false;
-		} else if (!id.equals(other.id)) {
-			return false;	
-		}
+		} 
 		
 		if(!password.equals(other.password)) {
 			throw new PasswordDismatchException();
 		}
+		
 		return true;
 	}
 	
