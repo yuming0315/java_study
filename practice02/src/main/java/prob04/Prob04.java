@@ -10,16 +10,7 @@ public class Prob04 {
 	}
 
 	public static char[] reverse(String str) {
-		char[] result = str.toCharArray();
-
-		int count = result.length / 2;
-		for(int i = 0; i < count; i++) {
-			char temp = result[i];
-			result[i] = result[result.length - 1 - i];
-			result[result.length - 1 - i] = temp;
-		}
-
-		return result;
+		return new StringBuffer(str).reverse().toString().toCharArray();
 	}
 
 	public static void printCharArray(char[] array) {

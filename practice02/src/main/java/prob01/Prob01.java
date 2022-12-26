@@ -11,11 +11,12 @@ public class Prob01 {
 		System.out.print("금액:");
 		int money = scanner.nextInt();
 
-		for(int i = 0; i < MONEYS.length; i++) {
-			int count = money / MONEYS[i];
-			money -= (count * MONEYS[i]);
-
-			System.out.println(MONEYS[i] + "원 : " + count + "개");
+		for(int i = 0; i < MONEYS.length&&money>0; i++) {
+			int q = money/MONEYS[i];
+			if(q>0) {
+				System.out.println(MONEYS[i]+"원 : "+q+"개");
+				money%=MONEYS[i];
+			}
 		}
 
 		scanner.close();

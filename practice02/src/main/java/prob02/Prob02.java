@@ -1,6 +1,7 @@
 package prob02;
 
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class Prob02 {
 
@@ -17,11 +18,11 @@ public class Prob02 {
 
 		scanner.close();
 
-		double sum = 0.;
-		for(int i = 0; i < intArray.length; i++) {
-			sum += intArray[i];
-		}
+//		double sum = 0.;
+//		for(int i = 0; i < intArray.length; i++) {
+//			sum += intArray[i];
+//		}
 
-		System.out.println(sum / intArray.length);
+		System.out.println( IntStream.of(intArray).sum()/ intArray.length);
 	}
 }

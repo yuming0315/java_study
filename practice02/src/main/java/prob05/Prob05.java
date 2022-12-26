@@ -22,24 +22,16 @@ public class Prob05 {
 			System.out.println("수를 결정하였습니다. 맞추어 보세요:");
 
 			while(true) {
-				// 시도 회수 증가
-				countTry++;
-
-				// 추측 범위 출력
 				System.out.println(minNumber + "-" + maxNumber);
-				// 입력 프롬프트
-				System.out.print(countTry + ">>");
+				System.out.print(++countTry + ">>");
 
-				// 입력 받기
 				int guessNumber = scanner.nextInt();
 
-				// 정답
 				if(guessNumber == correctNumber) {
 					System.out.println("맞췄습니다.");
 					break;
 				}
 
-				// 오답인 경우
 				if(guessNumber > correctNumber) {
 					System.out.println("더 낮게");
 					maxNumber = guessNumber;
