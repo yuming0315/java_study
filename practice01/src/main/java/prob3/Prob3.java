@@ -12,10 +12,8 @@ public class Prob3 {
 			int number = scanner.nextInt();
 			int sum = 0;
 
-			for(int i = 0; i <= number; i++) {
-				if(number % 2 == 0 && i % 2 == 0 || number % 2 != 0 && i % 2 != 0) {
-					sum += i;
-				}
+			for(; number > 0; number-=2) {
+				sum+=number;
 			}
 
 			System.out.println("결과값: " + sum);

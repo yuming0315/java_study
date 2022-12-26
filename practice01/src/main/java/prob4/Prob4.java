@@ -11,12 +11,8 @@ public class Prob4 {
 		String text = scanner.nextLine();
 
 		int length = text.length();
-		for(int i = 0; i < length; i++) {
-			for(int j = 0; j <= i; j++) {
-				System.out.print(text.charAt(j));
-			}
-
-			System.out.println("");
+		for(int i = 1; i < length+1; i++) {
+			System.out.println(text.substring(0, i));
 		}
 
 		scanner.close();

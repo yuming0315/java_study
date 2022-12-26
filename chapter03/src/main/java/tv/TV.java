@@ -6,9 +6,12 @@ public class TV {
 	private boolean power;
 	
 	public TV(int channel, int volume, boolean power) {
-		this.channel = channel;
-		this.volume = volume;
 		this.power = power;
+		if(notPower()) {
+			return;
+		}
+		channel(channel);
+		volume(volume);
 	}
 	
 	public void power(boolean on) {
@@ -16,25 +19,18 @@ public class TV {
 	}
 	
 	public void channel(boolean up) {
-		// channel(channel + (up ? 1 : -1));
-		if(up) {
-			channel(channel + 1);
-		} else {
-			channel(channel - 1);
-		}
+		 channel(channel + (up ? 1 : -1));
 	}
 
+	public boolean notPower() {
+		System.out.println("전원없음 변경 불가");
+		return !power;
+	}
 	public void channel(int channel) {
-		if(!power) {
+		if(notPower()) {
 			return;
 		}
-		
-		if(channel < 1) {
-			channel = 255;
-		} else if(channel > 255){
-			channel = 1;
-		}
-		
+		channel += channel<1 ? 255 : channel>255 ? -255 : 0;
 		this.channel = channel;
 	}
 	
@@ -43,16 +39,10 @@ public class TV {
 	}
 
 	public void volume(int volume) {
-		if(!power) {
+		if(notPower()) {
 			return;
 		}
-		
-		if(volume < 0) {
-			volume = 100;
-		} else if(volume > 100){
-			volume = 0;
-		}
-		
+		volume += volume<0 ? 100 : volume>100 ? -100: 0;
 		this.volume = volume;
 	}
 
