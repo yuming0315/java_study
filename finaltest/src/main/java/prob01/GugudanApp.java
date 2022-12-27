@@ -57,10 +57,20 @@ public class GugudanApp {
 		while(COUNT_ANSWER_NUMBER>set.size()) {
 			set.add(new Gugudan(randomize(1, 9),randomize(1, 9)));
 		}
-		Iterator<Gugudan> it = set.iterator();
-		for(int i=0;i<COUNT_ANSWER_NUMBER;i++) {
-			boardNumbers[i]=it.next().getValue();
+		
+		int idx=0;
+		for(Gugudan g : set) {
+			boardNumbers[idx++]=g.getValue();
 		}
+		
+//		for(Gugudan g : set) {
+//			System.out.println(g);
+//		}
+		
+//		Iterator<Gugudan> it = set.iterator();
+//		for(int i=0;i<COUNT_ANSWER_NUMBER;i++) {
+//			boardNumbers[i]=it.next().getValue();
+//		}
 		
 //		for(Object s : set.toArray(new Object[0])) {
 //			System.out.println(s.);

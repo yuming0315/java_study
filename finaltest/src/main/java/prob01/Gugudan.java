@@ -1,5 +1,7 @@
 package prob01;
 
+import java.util.Objects;
+
 public class Gugudan {
 	private int lValue;
 	private int rValue;
@@ -14,7 +16,7 @@ public class Gugudan {
 	}
 	@Override
 	public int hashCode() {
-		return lValue*rValue;
+		return Objects.hash(lValue*rValue);
 	}
 
 	@Override
@@ -29,5 +31,8 @@ public class Gugudan {
 		return lValue*rValue == other.lValue*other.rValue;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return lValue + " " + rValue;
+	}
 }

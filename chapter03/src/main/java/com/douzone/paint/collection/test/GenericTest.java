@@ -87,5 +87,6 @@ public class GenericTest {
 		for(Shape s :in) {
 			out.push(s);
 		}
+		
 	}
 }
