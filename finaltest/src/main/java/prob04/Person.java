@@ -7,15 +7,11 @@ public class Person {
 	
 	/* 코드 작성 */
 	public Person() {
-		this.name="";
-		this.age=12;
-		numberOfPerson++;
+		this(12,"");
 	}
 	
 	public Person(String name) {
-		this.name = name;
-		this.age=12;
-		numberOfPerson++;
+		this(12,name);
 	}
 
 	public Person(int age, String name) {

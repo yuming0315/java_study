@@ -36,12 +36,15 @@ public class LoginMain {
 	}
 	
 	public static void login(List<User> users, User user ){
-		/* 코드 작성 */
-		for(User u : users) {
-			if(u.equals(user)) {
-				return;
-			}
+		if(!users.contains(user)){
+			throw new UserNotFoundException();
 		}
-		throw new UserNotFoundException();
+		//contains 자체가 객체를 돌면서 user와 equals 비교함
+//		for(User u : users) {
+//			if(u.equals(user)) {
+//				return;
+//			}
+//		}
+		
 	}
 }

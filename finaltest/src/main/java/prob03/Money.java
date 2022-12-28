@@ -28,25 +28,25 @@ public String toString() {
 
 
 	public Object add(Money m) {
-		return new Money(this.amount+m.amount);
+		return new Money(amount+m.amount);
 	}
 
 
 
 	public Object minus(Money m) {
-		return new Money(this.amount-m.amount);
+		return new Money(amount-m.amount);
 	}
 
 
 
 	public Object multiply(Money m) {
-		return new Money(this.amount*m.amount);
+		return new Money(amount*m.amount);
 	}
 
 
 
 	public Object devide(Money m) {
-		return new Money(this.amount/m.amount);
+		return new Money(amount/m.amount);
 	}	
 	
 }
