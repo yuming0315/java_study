@@ -51,8 +51,8 @@ public class RequestHandler extends Thread {
 //			consoleLog(request);
 
 			String[] tokens = request.split(" ");
+			consoleLog(request);
 			if ("GET".equals(tokens[0])) {
-				consoleLog(request);
 				reponseStaticResource(outputStream, tokens[1], tokens[2]);
 			} else {
 				// methods: post,put,delete, head, connect
@@ -83,7 +83,7 @@ public class RequestHandler extends Thread {
 		// Content-Type:....
 		// \r\n
 		// .....
-		request(outputStream,"/error/400.html",protocol);
+		reponseStaticResource(outputStream,"/error/400.html",protocol);
 	}
 
 	private void reponseStaticResource(OutputStream outputStream, String url, String protocol) throws IOException {
@@ -91,10 +91,6 @@ public class RequestHandler extends Thread {
 		if ("/".equals(url)) {
 			url = "/index.html";
 		}
-		request(outputStream,url,protocol);
-	}
-
-	private void request(OutputStream outputStream, String url, String protocol) throws IOException {
 		File file = new File(DOCUMENT_ROOT + url);
 		if (!file.exists()) {
 			reponse404Error(outputStream, protocol);
@@ -116,7 +112,7 @@ public class RequestHandler extends Thread {
 		// Content-Type:....
 		// \r\n
 		// .....
-		request(outputStream,"/error/404.html",protocol);
+		reponseStaticResource(outputStream,"/error/404.html",protocol);
 	}
 
 	public void consoleLog(String message) {
