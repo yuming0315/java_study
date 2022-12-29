@@ -1,4 +1,4 @@
-package test;
+package echo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,8 +31,8 @@ public class EchoServer {
 			
 			try {				
 				//flash를 자동으로 해라는 의미로 true 넣어줌
-				PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()),true);
-				BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(),"utf-8"),true);
+				BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(),"utf-8"));
 				//여과기를 많이 거쳐서 상단 작업코드에서 불필요한 코드를 줄임
 				
 				while(true) {
