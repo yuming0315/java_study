@@ -21,42 +21,9 @@ public class EchoServer {
 			serverSocket.bind(new InetSocketAddress("0.0.0.0",PORT));//telnet 192.0.0.1 5000 으로 접근가능
 			log("starts...[port:" +PORT + "]");
 			
-			
-			Socket socket = serverSocket.accept(); // blocking
-			
-			InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress)socket.getRemoteSocketAddress();
-			String remoteHostAddress = inetRemoteSocketAddress.getAddress().getHostAddress();
-			int remotePort = inetRemoteSocketAddress.getPort();
-			log("connected by client[port:" +PORT + "]");
-			
-			try {				
-				//flash를 자동으로 해라는 의미로 true 넣어줌
-				PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(),"utf-8"),true);
-				BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(),"utf-8"));
-				//여과기를 많이 거쳐서 상단 작업코드에서 불필요한 코드를 줄임
-				
-				while(true) {
-					pw.print("[client] : ");
-					pw.flush();
-					String data = br.readLine();
-					if(data == null || data.equals("exit")) {
-						log("closed by client");
-						break;
-					}
-					log("received:" + data);
-					pw.println("[server] : "+data);
-				}
-				
-			} catch(IOException ex) {
-				log("error:" + ex);
-			} finally {
-				try {
-					if(socket != null && !socket.isClosed()) {
-						socket.close();
-					}
-				} catch(IOException ex) {
-					log("error:" + ex);
-				}
+			while(true) {
+				Socket socket = serverSocket.accept();
+				new EchoRequestHandler(socket);
 			}
 			
 		} catch (IOException e) {
@@ -73,7 +40,7 @@ public class EchoServer {
 		
 	}
 	private static void log(String message) {//메인에서 불러 쓸 거니까 스테틱
-		System.out.println("[EchoServer] "+message);
+		System.out.println("[EchoServer#" +Thread.currentThread().getId()+"] "+message);
 	}
 
 }
