@@ -25,7 +25,7 @@ public class ChatClientThread extends Thread {
 					log("closed by client");
 					break;
 				}
-				log("received:" + data);
+				System.out.println(data);
 			}
 		}catch(IOException ex) {
 			log("error:" + ex);

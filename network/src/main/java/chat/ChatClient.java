@@ -26,17 +26,23 @@ public class ChatClient {
 			
 			System.out.print("사용하실 별명을 입력해 주세요>");
 			String name = sc.nextLine();
-			pw.println("JOIN"+name);
+			pw.println("JOIN:"+name);
 			
 			new ChatClientThread(new BufferedReader(new InputStreamReader(socket.getInputStream(),"utf-8"))).start();
+			Thread.sleep(10);
 			
+			
+			//명령어> 방식으로 할거면 입력받을때마다 바꿔서 해야함 switch로 케이스 나누기
 			while(true) {
-				System.out.print(">");
-				pw.println(sc.nextLine());
+				System.out.print("SEND"+">");
+				String text = sc.nextLine();
+				pw.println("SND:"+text);
 			}
 			
 		}catch (IOException e) {
-			System.out.println("[client] error" + e);
+			System.out.println("IOException" + e);
+		} catch (InterruptedException e) {
+			System.out.println("InterruptedException" + e);
 		} finally {
 			try {
 				if (socket != null && !socket.isClosed()) {
