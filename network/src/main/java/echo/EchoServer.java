@@ -23,7 +23,7 @@ public class EchoServer {
 			
 			while(true) {
 				Socket socket = serverSocket.accept();
-				new EchoRequestHandler(socket);
+				new EchoRequestHandler(socket).start();
 			}
 			
 		} catch (IOException e) {

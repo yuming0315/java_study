@@ -20,7 +20,7 @@ public class EchoRequestHandler extends Thread {
 		InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress)socket.getRemoteSocketAddress();
 		String remoteHostAddress = inetRemoteSocketAddress.getAddress().getHostAddress();
 		int remotePort = inetRemoteSocketAddress.getPort();
-		log("connected by client[port:" +remotePort + "]");
+		log("connected by client[" + remoteHostAddress + ":" + remotePort + "]");
 		
 		try {				
 			//flash를 자동으로 해라는 의미로 true 넣어줌

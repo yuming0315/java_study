@@ -1,6 +1,7 @@
 package echo;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -16,6 +17,23 @@ public class EchoClient {
 	public static void main(String[] args) {
 		Socket socket = null;
 		Scanner scanner = null;
+		
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		try {
+			int a = System.in.read();
+			bw.write(a);
+			bw.write("\n");
+			bw.flush();
+			
+			
+			System.out.println(" 12421" );
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 		try {
 			socket = new Socket();
 
@@ -25,23 +43,23 @@ public class EchoClient {
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(),"utf-8"),true);
 			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(),"utf-8"));
 			
+			scanner = new Scanner(System.in);
 			while(true) {
-				scanner = new Scanner(System.in);
 				System.out.print(">");
-				String data = scanner.nextLine();
-				if(data == null || data.equals("exit")) {
-					log("");
+				String line = scanner.nextLine();
+				
+				if("exit".equals(line)) {
 					break;
 				}
 				
-				pw.println(data);
-				String line = br.readLine();
-				if(line == null) {
+				pw.println(line);
+				String data = br.readLine();
+				if(data == null) {
 					log("closed by server");
 					break;
 				}
 				
-				System.out.println("<"+line);
+				System.out.println("<" + data);
 			}
 			
 		} catch (IOException e) {
