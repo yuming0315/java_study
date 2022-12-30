@@ -23,13 +23,16 @@ public class ChatClient {
 			
 			socket.connect(new InetSocketAddress(SERVER_IP, PORT));
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(),"utf-8"),true);
+			
+			System.out.print("사용하실 별명을 입력해 주세요>");
+			String name = sc.nextLine();
+			pw.println("JOIN"+name);
+			
 			new ChatClientThread(new BufferedReader(new InputStreamReader(socket.getInputStream(),"utf-8"))).start();
 			
 			while(true) {
 				System.out.print(">");
-				sc.nextLine();
-				
-				
+				pw.println(sc.nextLine());
 			}
 			
 		}catch (IOException e) {

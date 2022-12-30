@@ -16,7 +16,8 @@ public class ChatServerThread extends Thread {
 	private static List<Writer> listWriters = new ArrayList<Writer>();
 	private String nickname;
 	private Socket socket;
-
+	private PrintWriter pw;
+	
 	public ChatServerThread(Socket socket) {
 		this.socket = socket;
 	}
@@ -24,22 +25,25 @@ public class ChatServerThread extends Thread {
 	@Override
 	public void run() {
 		BufferedReader br = null;
-		PrintWriter pw = null;
 		try {
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
-			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
-
+			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8),true);
+			
 			while (true) {
 				String request = br.readLine();
 				if (request == null || "quit".equals(request)) {
-					doQuit(pw);
+					doQuit();
 					break;
 				}
-
 				// 프로토콜 분석
 				String[] tokens = request.split(":");
 				switch(tokens[0]) {
-				
+					case "JOIN":
+						doJoin(tokens[1]);
+						break;
+					case "SND":
+						
+						
 				}
 				
 				
@@ -55,33 +59,33 @@ public class ChatServerThread extends Thread {
 		System.out.println("[client] " + str);
 	}
 
-	private void doJoin(String nickName, Writer writer) {
+	private void doJoin(String nickName) {
 		this.nickname = nickName;
 		String send = nickname + "님이 참여하였습니다.";
-		broadCast(send, writer);
+		broadCast(send, pw);
 		synchronized (listWriters) {
-			listWriters.add(writer);
+			listWriters.add(pw);
 		}
 	}
 
 	private void broadCast(String data, Writer writer) {
-		for (Writer w : removeWriter(writer)) {
+		for (Writer w : removeWriter()) {
 			PrintWriter pw = (PrintWriter) w;
 			pw.println(data);
 		}
 	}
 
-	private void doQuit(Writer writer) {
+	private void doQuit() {
 		String send = nickname + "님이 퇴장 하였습니다.";
 		log(send);
-		broadCast(send, writer);
-		this.listWriters = removeWriter(writer);
+		broadCast(send, pw);
+		this.listWriters = removeWriter();
 	}
 
-	private List<Writer> removeWriter(Writer writer) {
+	private List<Writer> removeWriter() {
 		List<Writer> list = null;
 		synchronized (listWriters) {
-			list = listWriters.stream().filter(cur -> cur != writer).collect(Collectors.toList());
+			list = listWriters.stream().filter(cur -> cur != pw).collect(Collectors.toList());
 		}
 		return list;
 	}
