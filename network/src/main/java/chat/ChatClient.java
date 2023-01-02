@@ -28,7 +28,7 @@ public class ChatClient {
 			while(true) {
 				System.out.print("사용하실 별명을 입력해 주세요>>");
 				String name = sc.nextLine();
-				if(name==null || "".equals(name)||name.matches("[^1-9a-zA-Z가-힣]")) {
+				if(name==null || "".equals(name)||name.matches(".*[^1-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣].*")) { //포함된걸 찾을 땐 이렇게
 					log("잘못된 별명 입력입니다. 특수문자는 입력할 수 없습니다 다시 입력해 주세요.");
 					continue;
 				}
@@ -45,8 +45,13 @@ public class ChatClient {
 
 				String text = sc.nextLine();
 				System.out.print(">>");
+				if(text==null || "QUIT".equals(text)||"quit".equals(text)||"Quit".equals(text)) {
+					Quit();
+					break;
+				}
+				
 				String[] tokens = text.split(" ");
-				switch(tokens[0]) {
+				switch(tokens[0]) {					
 				case "RENAME":
 				case "rename":
 					reName(tokens[1]);
@@ -58,10 +63,15 @@ public class ChatClient {
 				
 			}
 			
-		}catch (IOException e) {
-			System.out.println("IOException" + e);
-		} catch (InterruptedException e) {
-			System.out.println("InterruptedException" + e);
+		}
+//		catch (IOException e) {
+//			log("IOException "+e);
+//		} catch (InterruptedException e) {
+//			log("InterruptedException "+e);
+//		}
+		catch(Exception e){
+			Quit();
+			log("비정상 종료");
 		} finally {
 			try {
 				if (socket != null && !socket.isClosed()) {
@@ -74,6 +84,9 @@ public class ChatClient {
 				log("socket close error"+e);
 			}
 		}
+	}
+	private static void Quit() {
+		sndMsg("QUIT");
 	}
 	private static void sndMsg(String str) {
 		pw.println(str);

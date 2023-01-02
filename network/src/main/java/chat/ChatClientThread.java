@@ -21,7 +21,7 @@ public class ChatClientThread extends Thread {
 					log("대화방과 연결이 끊겼습니다.");
 					break;
 				}
-				else if("QUIT".equals(data)) {
+				else if("QUIT:OK".equals(data)) {
 					log("접속이 종료되었습니다.");
 					break;
 				}
@@ -29,6 +29,7 @@ public class ChatClientThread extends Thread {
 					log("메시지 전달 오류");
 					continue;
 				}
+				
 				String[] tokens = data.split(":");
 				
 				switch(tokens[0]) {
@@ -53,7 +54,9 @@ public class ChatClientThread extends Thread {
 						joinMe(tokens);
 					}
 					break;
-					
+				case "QUIT":
+					Quit(tokens[1]);
+					break;
 				}
 				
 			}
@@ -79,6 +82,9 @@ public class ChatClientThread extends Thread {
 	}
 	private void reNameMe(String[] str) {
 		print(str[2]+"로 별명이 변경되었습니다.");
+	}
+	private void Quit(String str) {
+		print(str+"님이 퇴장하셨습니다.");
 	}
 	
 	private void joinMe(String[] str) {

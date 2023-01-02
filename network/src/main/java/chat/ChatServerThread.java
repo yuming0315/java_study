@@ -59,6 +59,7 @@ public class ChatServerThread extends Thread {
 		} catch (IOException e) {
 			// 일단 나갔다는출력
 			doQuit();
+			log(nickname+"비정상 종료");
 		} finally {
 			// 소켓닫음 소켓에서 받아온거라 알아서 다 닫힘
 			if (socket != null || !socket.isClosed()) {
@@ -97,7 +98,7 @@ public class ChatServerThread extends Thread {
 	private void doQuit(String msg) {
 		Quit();
 		this.listWriters = removeWriter();
-		String send = nickname + "님이 퇴장 하였습니다.";
+		String send = msg+":"+nickname;
 		log(send);
 		broadCast(send);
 	}
