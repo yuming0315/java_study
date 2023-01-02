@@ -28,7 +28,7 @@ public class ChatClientThread extends Thread {
 				System.out.println(data);
 			}
 		}catch(IOException ex) {
-			log("error:" + ex);
+			log("BufferReader error:" + ex);
 		}
 		
 	}

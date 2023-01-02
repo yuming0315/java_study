@@ -13,8 +13,9 @@ public class ChatServer {
 	private static final int PORT = 5000;
 	
 	public static void main(String[] args) {
+		ServerSocket serverSocket = null;
 		try {
-			ServerSocket serverSocket = new ServerSocket();
+			serverSocket = new ServerSocket();
 			
 //			String hostAddress = InetAddress.getLocalHost().getHostAddress();
 			serverSocket.bind(new InetSocketAddress("0.0.0.0",PORT));
@@ -25,7 +26,15 @@ public class ChatServer {
 			}
 			
 		} catch (IOException e) {
-			log("IOException " + e);
+			log("서버 실행 IOException " + e);
+		}finally {
+			if(serverSocket != null || !serverSocket.isClosed() ) {
+				try {
+					serverSocket.close();
+				} catch (IOException e) {
+					log("서버소켓 close 오류"+e);
+				}
+			}
 		}
 	}
 

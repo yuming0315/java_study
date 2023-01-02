@@ -52,7 +52,7 @@ public class ChatClient {
 					sc.close();
 				}
 			} catch (IOException e) {
-				log("error"+e);
+				log("socket close error"+e);
 			}
 		}
 	}
