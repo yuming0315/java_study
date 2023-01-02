@@ -52,7 +52,13 @@ public class ChatServerThread extends Thread {
 		} catch (IOException e) {
 			doQuit();
 		}finally {
-			
+			if(socket==null||!socket.isClosed()) {
+				try {
+					socket.close();
+				} catch (IOException e) {
+					System.out.println("socket close Exception"+e);
+				}
+			}
 		}
 
 	}
