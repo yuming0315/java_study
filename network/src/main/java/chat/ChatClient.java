@@ -24,10 +24,19 @@ public class ChatClient {
 			socket.connect(new InetSocketAddress(SERVER_IP, PORT));
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(),"utf-8"),true);
 			
-			System.out.print("사용하실 별명을 입력해 주세요>");
-			String name = sc.nextLine();
-			pw.println("JOIN:"+name);
-			
+			while(true) {
+				System.out.print("사용하실 별명을 입력해 주세요>");
+				String name = sc.nextLine();
+				if(name==null || "".equals(name)) {
+					log("잘못된 별명 입력입니다. 다시 실행해 주세요.");
+					continue;
+				}
+				else {
+					pw.println("JOIN:"+name);
+					break;
+				}
+			}
+						
 			new ChatClientThread(new BufferedReader(new InputStreamReader(socket.getInputStream(),"utf-8"))).start();
 			Thread.sleep(10);
 			

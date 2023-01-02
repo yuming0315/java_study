@@ -1,4 +1,5 @@
 package chat.gui;
+
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
@@ -33,15 +34,33 @@ public class ChatWindow {
 		// Button
 		buttonSend.setBackground(Color.GRAY);
 		buttonSend.setForeground(Color.WHITE);
-		buttonSend.addActionListener( new ActionListener() {
+		buttonSend.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed( ActionEvent actionEvent ) {
+			public void actionPerformed(ActionEvent actionEvent) {
 				sendMessage();
 			}
 		});
+		// ActionEvent e를 받아와서 실행 람다식
+		buttonSend.addActionListener((e) -> sendMessage());
 
 		// Textfield
 		textField.setColumns(80);
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				char keyCode = e.getKeyChar();
+				if (keyCode == KeyEvent.VK_ENTER) {
+					sendMessage();
+				}
+			}
+		});
+
+//		textField.addKeyListener((e)-> {
+//			char keyCode = e.getKeyChar();
+//			if(keyCode == KeyEvent.VK_ENTER) {
+//				sendMessage();
+//			}
+//		});
 
 		// Pannel
 		pannel.setBackground(Color.LIGHT_GRAY);
@@ -56,13 +75,48 @@ public class ChatWindow {
 		// Frame
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
+				// clean-up
+
+				// exit java(Application)
 				System.exit(0);
 			}
 		});
+
 		frame.setVisible(true);
+//		frame.requestFocus();
 		frame.pack();
+
+		//IOStream 받아오기
+		//ChatClientThread 생성하고 실행
+		
 	}
-	
+
+	private void finish() {
+		// quit protocol 구현
+
+		// exit java(application)
+		System.exit(0);
+	}
+
 	private void sendMessage() {
+		String message = textField.getText();
+		System.out.println(message);
+		message.replaceAll("\n", "");
+		updateTextArea(message);
+//		textArea.setText(textArea.getText() + message);
+		textField.setText("");
+		textField.requestFocus();
+	}
+
+	private void updateTextArea(String message) {
+		textArea.append(message+"\n");
+	}
+
+	private class ChatClientThread extends Thread {
+
+		@Override
+		public void run() {
+			updateTextArea("1234");
+		}
 	}
 }
