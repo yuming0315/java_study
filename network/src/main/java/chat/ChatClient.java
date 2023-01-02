@@ -23,10 +23,10 @@ public class ChatClient {
 			
 			socket.connect(new InetSocketAddress(SERVER_IP, PORT));
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(),"utf-8"),true);
-			
+			String name = null;
 			while(true) {
 				System.out.print("사용하실 별명을 입력해 주세요>");
-				String name = sc.nextLine();
+				name = sc.nextLine();
 				if(name==null || "".equals(name)) {
 					log("잘못된 별명 입력입니다. 다시 실행해 주세요.");
 					continue;
@@ -43,8 +43,10 @@ public class ChatClient {
 			
 			//명령어> 방식으로 할거면 입력받을때마다 바꿔서 해야함 switch로 케이스 나누기
 			while(true) {
-				System.out.print("SEND"+">");
+				System.out.print(">>");
 				String text = sc.nextLine();
+				
+				
 				pw.println("SND:"+text);
 			}
 			

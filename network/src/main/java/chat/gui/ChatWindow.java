@@ -34,12 +34,12 @@ public class ChatWindow {
 		// Button
 		buttonSend.setBackground(Color.GRAY);
 		buttonSend.setForeground(Color.WHITE);
-		buttonSend.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				sendMessage();
-			}
-		});
+//		buttonSend.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent actionEvent) {
+//				sendMessage();
+//			}
+//		});
 		// ActionEvent e를 받아와서 실행 람다식
 		buttonSend.addActionListener((e) -> sendMessage());
 
@@ -75,15 +75,13 @@ public class ChatWindow {
 		// Frame
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				// clean-up
-
-				// exit java(Application)
-				System.exit(0);
+				finish();
 			}
 		});
 
 		frame.setVisible(true);
-//		frame.requestFocus();
+		frame.requestFocus();
+		frame.setAlwaysOnTop(true); 
 		frame.pack();
 
 		//IOStream 받아오기
@@ -100,12 +98,10 @@ public class ChatWindow {
 
 	private void sendMessage() {
 		String message = textField.getText();
-		System.out.println(message);
-		message.replaceAll("\n", "");
-		updateTextArea(message);
-//		textArea.setText(textArea.getText() + message);
 		textField.setText("");
 		textField.requestFocus();
+		
+		updateTextArea(message);
 	}
 
 	private void updateTextArea(String message) {
@@ -116,6 +112,9 @@ public class ChatWindow {
 
 		@Override
 		public void run() {
+			// String message = br.readLine();
+						//
+						//
 			updateTextArea("1234");
 		}
 	}

@@ -24,9 +24,8 @@ public class ChatServerThread extends Thread {
 
 	@Override
 	public void run() {
-		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
 			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
 
 			while (true) {
@@ -39,19 +38,25 @@ public class ChatServerThread extends Thread {
 				String[] tokens = request.split(":");
 				switch (tokens[0]) {
 				case "JOIN":
-					doJoin(tokens[1]);
+					doJoin(request);
 					break;
 				case "SND":
-					send(tokens[1]);
+					sendMsg(request+":"+nickname);
 					break;
+				case "RENAME":
+					reName(tokens[1]);
+					break;
+					
 
 				}
 
 			}
 
 		} catch (IOException e) {
+			//일단 나갔다는출력
 			doQuit();
 		}finally {
+			//소켓닫음 소켓에서 받아온거라 알아서 다 닫힘
 			if(socket!=null||!socket.isClosed()) {
 				try {
 					socket.close();
@@ -64,32 +69,20 @@ public class ChatServerThread extends Thread {
 	}
 
 	private void log(String str) {
-		System.out.println("[client] " + str);
+		System.out.println("[Server] " + str);
 	}
 
 	private void doJoin(String nickName) {
 		this.nickname = nickName;
-		String send = nickname + "님이 참여하였습니다.";
+		String send = "JOIN:"+nickName;
 		log(send);
 		broadCast(send);
 		synchronized (listWriters) {
 			listWriters.add(pw);
 		}
 		Join();
-	}
-
-	private void broadCast(String data) {
-		for (Writer w : removeWriter()) {
-			PrintWriter write = (PrintWriter) w;
-			write.println(data);
-		}
-	}
-	private void Join() {
-		pw.println(nickname+"님 환영합니다.");
-	}
-
-	private void Quit() {
-		pw.println("방에서 퇴장하였습니다.");
+		
+//		String send = nickname + "님이 참여하였습니다.";
 	}
 	
 	private void doQuit() {
@@ -98,6 +91,30 @@ public class ChatServerThread extends Thread {
 		String send = nickname + "님이 퇴장 하였습니다.";
 		log(send);
 		broadCast(send);
+	}
+	
+	private void broadCast(String data) {
+		for (Writer w : removeWriter()) {
+			PrintWriter write = (PrintWriter) w;
+			write.println(data);
+		}
+//		pw.println("SND:OK");
+	}
+	private void sendME(String str) {
+		pw.println(str);
+	}
+	private void Join() {
+		sendME(nickname+"님 환영합니다.");
+	}
+
+	private void Quit() {
+		sendME("방에서 퇴장하였습니다.");
+	}
+	
+	private void reName(String name) {
+		sendME(nickname +"에서"+name+"으로 별명을 변경하였습니다.");
+		broadCast(nickname +"님이 "+name+"으로 별명을 변경하셨습니다.");
+		nickname = name;
 	}
 
 	private List<Writer> removeWriter() {
@@ -108,7 +125,7 @@ public class ChatServerThread extends Thread {
 		return list;
 	}
 
-	private void send(String str) {
+	private void sendMsg(String str) {
 		broadCast(nickname + ":" + str);
 	}
 }
