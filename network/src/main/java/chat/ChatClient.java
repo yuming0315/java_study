@@ -28,8 +28,7 @@ public class ChatClient {
 			while(true) {
 				System.out.print("사용하실 별명을 입력해 주세요>>");
 				String name = sc.nextLine();
-				if(name==null || "".equals(name)||name.matches(".*[^1-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣].*")) { //포함된걸 찾을 땐 이렇게
-					log("잘못된 별명 입력입니다. 특수문자는 입력할 수 없습니다 다시 입력해 주세요.");
+				if(name==null || "".equals(name) || !naming(name)) {
 					continue;
 				}
 				else {
@@ -46,7 +45,6 @@ public class ChatClient {
 				String text = sc.nextLine();
 				System.out.print(">>");
 				if(text==null || "QUIT".equals(text)||"quit".equals(text)||"Quit".equals(text)) {
-					Quit();
 					break;
 				}
 				
@@ -54,9 +52,10 @@ public class ChatClient {
 				switch(tokens[0]) {					
 				case "RENAME":
 				case "rename":
-					reName(tokens[1]);
-					break;
-				
+					if(naming(tokens[1])) {
+						reName(tokens[1]);
+					}
+					break;			
 				default:
 					sndMsg("SND:"+text);
 				}
@@ -64,15 +63,10 @@ public class ChatClient {
 			}
 			
 		}
-//		catch (IOException e) {
-//			log("IOException "+e);
-//		} catch (InterruptedException e) {
-//			log("InterruptedException "+e);
-//		}
 		catch(Exception e){
-			Quit();
 			log("비정상 종료");
 		} finally {
+			Quit();
 			try {
 				if (socket != null && !socket.isClosed()) {
 					socket.close();
@@ -99,4 +93,11 @@ public class ChatClient {
 		System.out.println("[Client Error] "+message);
 	}
 
+	private static boolean naming(String name) {
+		if(name.matches(".*[^1-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣].*")) { //포함된걸 찾을 땐 이렇게
+			log("잘못된 별명 입력입니다. 특수문자는 입력할 수 없습니다 다시 입력해 주세요.");
+			return false;
+		}
+		return true;
+	}
 }

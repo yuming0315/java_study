@@ -29,10 +29,9 @@ public class ChatServerThread extends Thread {
 					new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
 			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
 
-			while (true) {
+			while (!socket.isClosed()) {
 				String request = br.readLine();
 				if (request == null || "QUIT".equals(request)) {
-					doQuit(request);
 					break;
 				}
 				// 프로토콜 분석
@@ -58,9 +57,9 @@ public class ChatServerThread extends Thread {
 
 		} catch (IOException e) {
 			// 일단 나갔다는출력
-			doQuit();
 			log(nickname+"비정상 종료");
 		} finally {
+			doQuit();
 			// 소켓닫음 소켓에서 받아온거라 알아서 다 닫힘
 			if (socket != null || !socket.isClosed()) {
 				try {
@@ -112,7 +111,9 @@ public class ChatServerThread extends Thread {
 	}
 
 	private void sendME(String str) {
-		pw.println(str);
+		if(pw!=null) {
+			pw.println(str+":OK");
+		}
 	}
 
 	private void Join(String msg) {
@@ -120,7 +121,7 @@ public class ChatServerThread extends Thread {
 	}
 
 	private void Quit() {
-		sendME("QUIT:OK");
+		sendME("QUIT");
 	}
 
 	private void reName(String msg, String name) {

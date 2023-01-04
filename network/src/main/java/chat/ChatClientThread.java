@@ -81,7 +81,7 @@ public class ChatClientThread extends Thread {
 		return text;
 	}
 	private void reNameMe(String[] str) {
-		print(str[2]+"로 별명이 변경되었습니다.");
+		print(str[1]+"로 별명이 변경되었습니다.");
 	}
 	private void Quit(String str) {
 		print(str+"님이 퇴장하셨습니다.");
