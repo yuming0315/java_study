@@ -95,7 +95,7 @@ public class ChatClientThread extends Thread {
 		return !str[str.length-1].equals("OK");
 	}
 	
-	private void print(String str) {
+	protected void print(String str) {
 		System.out.print(str+"\n>>");
 	}
 	private void join(String...str ) {
@@ -106,7 +106,7 @@ public class ChatClientThread extends Thread {
 		print(str[2]+"님이 "+str[1]+"으로 별명을 변경하였습니다");
 	}
 
-	private void log(String str) {
+	protected void log(String str) {
 		System.out.println("[server] "+str);
 	}
 }

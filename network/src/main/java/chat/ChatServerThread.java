@@ -91,13 +91,9 @@ public class ChatServerThread extends Thread {
 	}
 
 	private void doQuit() {
-		doQuit("QUIT");
-	}
-
-	private void doQuit(String msg) {
 		Quit();
 		this.listWriters = removeWriter();
-		String send = msg+":"+nickname;
+		String send = "QUIT"+":"+nickname;
 		log(send);
 		broadCast(send);
 	}
