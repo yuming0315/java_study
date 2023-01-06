@@ -18,6 +18,7 @@ public class ChatServer {
 			serverSocket = new ServerSocket();
 			
 			serverSocket.bind(new InetSocketAddress("0.0.0.0",PORT));
+			System.out.println("서버 on");
 			
 			while(true) {
 				Socket socket = serverSocket.accept();

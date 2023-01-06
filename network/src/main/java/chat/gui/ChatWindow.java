@@ -188,8 +188,7 @@ public class ChatWindow {
 		
 		@Override
 		protected void log(String str) {
-			updateTextArea("[server] "+str);
-			 
+			updateTextArea("[server] "+str);		 
 		}
 		
 	}
